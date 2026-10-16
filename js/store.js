@@ -4,6 +4,7 @@
  */
 
 import { CONFIG } from './config.js';
+import { normalizePhoneNumber } from './whatsapp.js';
 
 /**
  * Render data pengaturan toko ke elemen-elemen DOM
@@ -40,13 +41,16 @@ export function renderStoreInfo(storeData = {}) {
     el.textContent = storeName;
   });
 
-  // 5. Update link kontak WhatsApp langsung di navbar/header jika ada
-  const contactLinks = document.querySelectorAll('a[data-role="contact-wa"]');
-  if (contactLinks.length > 0 && storeData.no_wa) {
-    const rawWa = storeData.no_wa;
-    const cleanWa = String(rawWa).replace(/\D/g, '').replace(/^0/, '62');
+  // 5. Update link kontak WhatsApp langsung di navbar/header
+  const contactLinks = document.querySelectorAll('#btn-admin-wa, a[data-role="contact-wa"], .btn-wa-direct');
+  if (contactLinks.length > 0) {
+    const rawWa = storeData.no_wa || CONFIG.FALLBACK.PHONE;
+    const cleanWa = normalizePhoneNumber(rawWa);
+    const greetingText = `Halo Admin ${storeName}, saya ingin bertanya seputar produk di katalog.`;
+    const waUrl = `https://wa.me/${cleanWa}?text=${encodeURIComponent(greetingText)}`;
+
     contactLinks.forEach(link => {
-      link.href = `https://wa.me/${cleanWa}`;
+      link.href = waUrl;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
     });
