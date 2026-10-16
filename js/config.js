@@ -4,7 +4,7 @@
 
 export const CONFIG = {
   // Ganti string di bawah ini dengan URL Web App hasil deploy Google Apps Script kamu
-  API_URL: 'https://ixroo.github.io/TUGAS/',
+  API_URL: 'https://script.google.com/macros/s/AKfycbzU_JrBxOKbv63vpF05-B9960b4YT2D19zeol6Pwzkt-FDp4kbgObjGfsT0ibVi_ab4/exec',
   
   // Konfigurasi fallback jika data spreadsheet kosong
 FALLBACK: {
